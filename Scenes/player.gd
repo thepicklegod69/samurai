@@ -1,8 +1,4 @@
-extends CharacterBody2D
-
-@export var max_health: int = 100
-var health: int = max_health
-signal health_changed(new_health: int)
+extends Character
 
 #const SPEED = 150.0
 const RUN_SPEED = 200.0 
@@ -15,7 +11,6 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
 
 	# Handle jump.
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
@@ -42,7 +37,6 @@ func _physics_process(delta):
 	elif direction != 0:  # Walk if moving but not holding "Shift"
 		animated_sprite.play("Walk")
 	
-	
 	if velocity.y < 0:
 		animated_sprite.play("Jump")
 	elif velocity.y > 0:
@@ -54,21 +48,3 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, speed)
 
 	move_and_slide()
-
-func _ready() -> void:
-	health = max_health
-	emit_signal("health_changed", health)
-
-func take_damage(amount: int) -> void:
-	health = clamp(health - amount, 0, max_health)
-	emit_signal("health_changed", health)
-	if health <= 0:
-		die()
-
-func heal(amount: int) -> void:
-	health = clamp(health + amount, 0, max_health)
-	emit_signal("health_changed", health)
-
-func die() -> void:
-	print("Player died")
-	get_tree().change_scene("res://scenes/GameOver.tscn")
