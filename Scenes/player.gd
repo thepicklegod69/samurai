@@ -1,5 +1,9 @@
 extends CharacterBody2D
 
+@export var max_health: int = 100
+var health: int = max_health
+signal health_changed(new_health: int)
+
 #const SPEED = 150.0
 const RUN_SPEED = 200.0 
 const WALK_SPEED = 100.0
@@ -50,4 +54,21 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, speed)
 
 	move_and_slide()
-	#Helloooooooo
+
+func _ready() -> void:
+	health = max_health
+	emit_signal("health_changed", health)
+
+func take_damage(amount: int) -> void:
+	health = clamp(health - amount, 0, max_health)
+	emit_signal("health_changed", health)
+	if health <= 0:
+		die()
+
+func heal(amount: int) -> void:
+	health = clamp(health + amount, 0, max_health)
+	emit_signal("health_changed", health)
+
+func die() -> void:
+	print("Player died")
+	get_tree().change_scene("res://scenes/GameOver.tscn")
