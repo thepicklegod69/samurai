@@ -6,11 +6,10 @@ extends ProgressBar
 func _ready() -> void:
 	if not player:
 		push_error("HealthBar: player_path is invalid!")
-		print("HealthBar not player")
+		print("HealthBar: player_path is invalid!")
 		return
 		
 	print("DEBUG → Player.max_health:", player.max_health, "player.health:", player.health)
-
 	max_value = player.max_health
 	player.connect("health_changed", Callable(self, "_on_health_changed"))
 	_on_health_changed(player.health)  # immediately sync UI to current health	value = player.health

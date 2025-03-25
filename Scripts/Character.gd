@@ -10,8 +10,8 @@ class_name Character
 @export var stamina_cost_attack: int = 20
 @export var stamina_cost_block: int = 10
 
-var health: int
-var stamina: float
+var health: int = 100
+var stamina: float = 100
 
 # —— Signals —— #
 signal health_changed(new_health: int)
