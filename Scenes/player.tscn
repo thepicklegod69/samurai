@@ -1,7 +1,7 @@
 [gd_scene load_steps=80 format=3 uid="uid://dyppt5sx10udn"]
 
 [ext_resource type="Texture2D" uid="uid://c3pu34dm85kwv" path="res://Art/Samurai_characters/Samurai_(1-6)/Samurai_#1/Sprites/IDLE.png" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://dcfdx5lnkk6p" path="res://Scenes/player.gd" id="1_onrkg"]
+[ext_resource type="Script" uid="uid://dcfdx5lnkk6p" path="res://Scenes/Character#1.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://cpeinjftq3w4c" path="res://Art/Samurai_characters/Samurai_(1-6)/Samurai_#1/Sprites/ATTACK 1.png" id="2_8erm5"]
 [ext_resource type="Texture2D" uid="uid://dot8k8ywldw2q" path="res://Art/Samurai_characters/Samurai_(1-6)/Samurai_#1/Sprites/ATTACK 2.png" id="3_f1ek2"]
 [ext_resource type="Texture2D" uid="uid://1rkt3nyvinre" path="res://Art/Samurai_characters/Samurai_(1-6)/Samurai_#1/Sprites/JUMP.png" id="3_vgqql"]
@@ -376,7 +376,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Dash",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -526,20 +526,26 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_urp6f"]
 radius = 6.0
-height = 24.0
+height = 32.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Character#1" type="CharacterBody2D"]
 script = ExtResource("1_onrkg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 position = Vector2(0, -33)
 sprite_frames = SubResource("SpriteFrames_ivps1")
-animation = &"Idle"
+animation = &"Run"
 autoplay = "Idle"
-frame = 5
-frame_progress = 0.817187
+frame_progress = 0.684346
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -16)
 shape = SubResource("CapsuleShape2D_urp6f")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -15.0
+offset_top = -58.0
+offset_right = 16.0
+offset_bottom = -35.0
+text = "Jeff"
