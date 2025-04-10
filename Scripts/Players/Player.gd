@@ -1,9 +1,14 @@
 extends Character
+class_name Player
 
 #const SPEED = 150.0
 const RUN_SPEED = 200.0 
 const WALK_SPEED = 100.0
 const JUMP_VELOCITY = -250.0
+@export var attack_damage: int = 20
+@export var attack_cooldown: float = 0.5
+
+var can_attack := true
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -23,6 +28,9 @@ func _physics_process(delta):
 	var speed := RUN_SPEED if is_running else WALK_SPEED  # Walk is slower
 	
 	velocity.x = direction * speed
+	
+	if Input.is_action_just_pressed("Basic_attack_right") and can_attack:
+		do_attack()
 
 	if direction > 0:
 		animated_sprite.flip_h = false
@@ -48,3 +56,18 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, speed)
 
 	move_and_slide()
+	
+func do_attack() -> void:
+	can_attack = false
+
+	var hitbox = $AttackHitbox
+	hitbox.set_meta("damage", attack_damage)
+	hitbox.monitoring = true
+
+	# Wait 0.1 seconds for the attack hitbox to register collisions
+	await get_tree().create_timer(0.1).timeout
+	hitbox.monitoring = false
+
+	# Wait attack cooldown before allowing next attack
+	await get_tree().create_timer(attack_cooldown).timeout
+	can_attack = true

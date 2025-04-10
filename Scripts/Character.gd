@@ -21,6 +21,7 @@ signal died(attacker)
 func _ready() -> void:
 	health = max_health
 	stamina = max_stamina
+#	$AttackHitbox.connect("area_entered", Callable(self, "_on_attack_hitbox_entered"))
 
 func take_damage(amount: int, attacker=null) -> void:
 	health = clamp(health - amount, 0, max_health)
@@ -34,6 +35,10 @@ func attack(target: Character) -> void:
 		stamina -= stamina_cost_attack
 		emit_signal("stamina_changed", stamina)
 		target.take_damage(weapon_strength, self)
+
+func _on_attack_hitbox_entered(area: Area2D) -> void:
+	if area.has_meta("damage"):
+		take_damage(area.get_meta("damage"))
 
 func block() -> bool:
 	if stamina >= stamina_cost_block:

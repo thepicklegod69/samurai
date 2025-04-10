@@ -11,8 +11,18 @@ config_version=5
 [application]
 
 config/name="Samurai"
-run/main_scene="uid://00is6t0rbvr4"
+run/main_scene="uid://ulophokgn6g2"
 config/features=PackedStringArray("4.4", "Forward Plus")
+
+[autoload]
+
+Global="*res://Scripts/Global.gd"
+
+[display]
+
+window/size/viewport_width=1200
+window/size/viewport_height=600
+window/stretch/mode="canvas_items"
 
 [input]
 
